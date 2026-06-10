@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Converter</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    /* 🌿 Animated Green Gradient */
+    background: linear-gradient(270deg, #11998e, #38ef7d, #00c9a7);
+    background-size: 600% 600%;
+    animation: gradientMove 10s ease infinite;
+}
+
+/* Animation */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Mobile Card */
+.mobile{
+    width:360px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+    border-radius:35px;
+    padding:30px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
+    border:1px solid rgba(255,255,255,0.2);
+    color:white;
+}
+
+/* Status Bar */
+.status{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* Heading */
+h1{
+    text-align:center;
+    margin-bottom:50px;
+    font-size:30px;
+    color:white;
+}
+
+/* Rows */
+.row{
+    display:flex;
+    gap:20px;
+    margin-bottom:35px;
+}
+
+.box{
+    flex:1;
+}
+
+/* Labels */
+label{
+    display:block;
+    margin-bottom:12px;
+    color:#e0e0e0;
+    font-size:18px;
+}
+
+/* Inputs */
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    font-size:22px;
+    background:rgba(255,255,255,0.2);
+    color:white;
+    outline:none;
+}
+
+select option{
+    color:black;
+}
+
+input::placeholder{
+    color:white;
+}
+
+/* Result */
+.result{
+    margin-bottom:45px;
+}
+
+.result-value{
+    background:rgba(255,255,255,0.2);
+    padding:18px;
+    border-radius:15px;
+    font-size:28px;
+    font-weight:bold;
+    text-align:center;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:18px;
+    background:linear-gradient(to right,#00c6ff,#0072ff);
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 25px #00c6ff;
+}
+
+/* Icon */
+.temp-icon{
+    text-align:center;
+    font-size:55px;
+    margin-bottom:20px;
+    color:#ffd369;
+}
+
+/* Responsive */
+@media(max-width:400px){
+    .mobile{
+        width:95%;
+    }
+
+    .row{
+        flex-direction:column;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="mobile">
+
+    <!-- Status -->
+    <div class="status">
+        <span id="time">9:41</span>
+        <span>
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-full"></i>
+        </span>
+    </div>
+
+    <!-- Icon -->
+    <div class="temp-icon">
+        <i class="fas fa-temperature-high"></i>
+    </div>
+
+    <!-- Heading -->
+    <h1>Temperature Converter</h1>
+
+    <!-- Input -->
+    <div class="row">
+
+        <div class="box">
+            <label>Degrees</label>
+            <input type="number" id="degree" value="72">
+        </div>
+
+        <div class="box">
+            <label>Type</label>
+            <select id="type">
+                <option>Fahrenheit</option>
+                <option>Celsius</option>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- Result -->
+    <div class="result">
+        <label>Result</label>
+        <div class="result-value" id="result">
+            22.2222 °C
+        </div>
+    </div>
+
+    <!-- Button -->
+    <button onclick="convertTemp()">
+        Convert
+    </button>
+
+</div>
+
+<script>
+
+/* Time */
+function updateTime(){
+    let now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    document.getElementById("time").innerHTML =
+    hours + ":" + minutes;
+}
+
+updateTime();
+setInterval(updateTime,1000);
+
+/* Converter */
+function convertTemp(){
+
+    let degree = document.getElementById("degree").value;
+    let type = document.getElementById("type").value;
+    let result;
+
+    if(type === "Fahrenheit"){
+        result = (degree - 32) * 5/9;
+        document.getElementById("result").innerHTML =
+        result.toFixed(2) + " °C";
+    }
+    else{
+        result = (degree * 9/5) + 32;
+        document.getElementById("result").innerHTML =
+        result.toFixed(2) + " °F";
+    }
+}
+
+</script>
+
+</body>
+</html>
